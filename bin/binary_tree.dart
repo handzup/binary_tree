@@ -3,25 +3,24 @@ import 'dart:collection';
 import 'package:binary_tree/binary_tree.dart';
 
 void main(List<String> args) {
-  final tree = BinaryTree<int>();
-  tree.add(7);
-  tree.add(3);
-  tree.add(2);
-  tree.add(4);
-  tree.add(5);
+  final tree = BinaryTree<Data>();
+  tree.add(Data(7, 77));
+  tree.add(Data(3, 33));
+  tree.add(Data(2, 22));
+  tree.add(Data(4, 44));
+  tree.add(Data(5, 55));
+  tree.add(Data(9, 99));
+  tree.add(Data(8, 88));
+  tree.add(Data(12, 1212));
+  tree.add(Data(10, 1010));
+  tree.add(Data(13, 1313));
+  tree.add(Data(11, 111));
 
-  tree.add(9);
-  tree.add(8);
-  tree.add(12);
-  tree.add(10);
-  tree.add(13);
-  tree.add(11);
-
-  tree.add(25);
-  tree.add(15);
-  tree.add(14);
-
-  traverseIteration<int>(node: tree.root, callback: (v) => print(v!.value));
+  tree.add(Data(25, 2525));
+  tree.add(Data(15, 151511));
+  tree.add(Data(14, 141414));
+  print(tree.search(3)?.value);
+  //traverseIteration<int>(node: tree.root, callback: (v) => print(v!.value));
   // final traverse = TraverseIterable<Node<int>>(tree.root!);
   // traverse.forEach((element) {
   //   print(element.value);
