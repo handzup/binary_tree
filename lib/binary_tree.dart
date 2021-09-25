@@ -25,7 +25,6 @@ class BinaryTree<T extends num> {
           break;
         }
         currentNode = currentNode.left;
-        print(currentNode);
       } else {
         if (currentNode.right == null) {
           currentNode.right = newNode;

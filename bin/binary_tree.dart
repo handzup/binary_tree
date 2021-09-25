@@ -8,6 +8,8 @@ void main(List<String> args) {
   tree.add(3);
   tree.add(2);
   tree.add(4);
+  tree.add(5);
+
   tree.add(9);
   tree.add(8);
   tree.add(12);
@@ -15,7 +17,88 @@ void main(List<String> args) {
   tree.add(13);
   tree.add(11);
 
-  traverseBFS<int>(node: tree.root, callback: (v) => print(v!.value));
+  tree.add(25);
+  tree.add(15);
+  tree.add(14);
+
+  traverseIteration<int>(node: tree.root, callback: (v) => print(v!.value));
+  // final traverse = TraverseIterable<Node<int>>(tree.root!);
+  // traverse.forEach((element) {
+  //   print(element.value);
+  // });
+}
+
+class Stack<T> {
+  final _queue = Queue<T>();
+  bool get isEmpty => _queue.isEmpty;
+
+  void push(T value) {
+    _queue.addLast(value);
+  }
+
+  T pop() {
+    return _queue.removeLast();
+  }
+
+  void clear() {
+    _queue.clear();
+  }
+}
+
+void traverseIteration<T>({Function(Node<T>?)? callback, Node<T>? node}) {
+  final stack = Stack<Node<T>>();
+  while (true) {
+    while (node != null) {
+      stack.push(node);
+      node = node.left;
+    }
+
+    if (stack.isEmpty) {
+      return;
+    }
+
+    node = stack.pop();
+    if (callback != null) {
+      callback(node);
+    }
+    node = node.right;
+  }
+}
+
+class TraverseIterable<T extends Node> extends Iterable<T> {
+  final T root;
+
+  TraverseIterable(this.root);
+  @override
+  Iterator<T> get iterator => TraverseIterator<T>(root);
+}
+
+class TraverseIterator<T extends Node> extends Iterator<T> {
+  T? root;
+
+  TraverseIterator(this.root) {
+    _root = root;
+  }
+  @override
+  T get current => _root as T;
+  T? _root;
+  final stack = Stack<T>();
+
+  @override
+  bool moveNext() {
+    while (root != null) {
+      stack.push(root!);
+      root = root!.left as T?;
+    }
+    if (stack.isEmpty) {
+      return false;
+    }
+    root = stack.pop();
+    _root = root;
+
+    root = root!.right as T?;
+    return true;
+  }
 }
 
 void traverseBFS<T>({Function(Node<T>?)? callback, Node<T>? node}) {
@@ -62,8 +145,11 @@ void postOrderDFS<T>({Function(Node<T>?)? callback, Node<T>? node}) {
     callback(node);
   }
 }
-//      7
-//   3    9 
-//  2 4 |8 | 12
-//          10  13
-//            11
+//    7
+//   3|   9
+//  2|4 |8|12
+//    |5  10|13 
+//         |11|25
+//           15| 
+//          14|    
+//            
